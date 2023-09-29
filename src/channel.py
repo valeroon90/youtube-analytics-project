@@ -24,12 +24,9 @@ class Channel:
 
 
 
-
-
-
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel = Channel.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        channel = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
 
 
@@ -48,6 +45,6 @@ class Channel:
         json.dump(result, file)
         file.close()
 
-    @staticmethod
-    def get_service():
-        return Channel.youtube
+    @classmethod
+    def get_service(cls, youtube):
+        return cls(Channel.youtube)
