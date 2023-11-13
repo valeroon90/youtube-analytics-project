@@ -67,4 +67,3 @@ class Channel:
 
     def __eq__(self, other):
         return int(self.subscriberCount) == int(other.subscriberCount)
-
