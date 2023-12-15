@@ -4,6 +4,7 @@ import os
 
 class Video:
     youtube = build('youtube', 'v3', developerKey=os.getenv('API_KEY'))
+
     def __init__(self, video_id):
         self.__video_id__ = video_id
 
@@ -11,18 +12,18 @@ class Video:
                                                id=video_id
                                                ).execute()
         try:
-            self.title = video_response['items'][0]['snippet']['title']
-            self.url = f'https://www.youtube.com/watch?v={self.__video_id__}'
-            self.view_count = video_response['items'][0]['statistics']['viewCount']
-            self.like_count = video_response['items'][0]['statistics']['likeCount']
+            item = video_response['items'][0]
+
         except IndexError:
             self.title = None
             self.url = None
             self.view_count = None
             self.like_count = None
-
-
-
+        else:
+            self.title = video_response['items'][0]['snippet']['title']
+            self.url = f'https://www.youtube.com/watch?v={self.__video_id__}'
+            self.view_count = video_response['items'][0]['statistics']['viewCount']
+            self.like_count = video_response['items'][0]['statistics']['likeCount']
 
     def __str__(self):
         return f"{self.title}"
